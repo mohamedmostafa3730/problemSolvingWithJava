@@ -9,23 +9,46 @@ public class groupAnagrams {
 
     public static void main(String[] args) {
         String[] words = {"act", "pots", "tops", "cat", "stop", "hat"};
+        System.out.println("<<<<<<<<<<<<<<| with sort |>>>>>>>>>>>>>>");
         System.out.println(Arrays.toString(words));
         System.out.println("-----------------------------");
-        List<List<String>> res = groupAnagramsSolOne(words);
-        System.out.println(res);
+        System.out.println("<<<<<<<<<<<<<<| with sort |>>>>>>>>>>>>>>");
+        List<List<String>> sort = groupAnagramsSort(words);
+        System.out.println(sort);
+        System.out.println("<<<<<<<<<<<<<<| with HashMap |>>>>>>>>>>>>>>");
+        List<List<String>> hashmap = groupAnagramsHashMap(words);
+        System.out.println(hashmap);
+
     }
 
-    //solution one
-    public static List<List<String>> groupAnagramsSolOne(String[] words) {
-        Map<String, List<String>> MapGroupAnagrams = new HashMap<>();
-        for (String s : words) {
-            char[] characterArray = s.toCharArray();
-            Arrays.sort(characterArray);
-            String NewWord = new String(characterArray);
-            MapGroupAnagrams.putIfAbsent(NewWord, new ArrayList<>());
-            MapGroupAnagrams.get(NewWord).add(s);
+//  Time complicity => O(m * n log n)
+//  memory complicity => O(m * n)
+//  m => the number of String 
+//  n => the number of character for every String
+    public static List<List<String>> groupAnagramsSort(String[] words) {
+        Map<String, List<String>> mainMap = new HashMap<>();
+        for (String word : words) {
+            char[] charArray = word.toCharArray();
+            Arrays.sort(charArray);
+            String wordSort = new String(charArray);
+            mainMap.putIfAbsent(wordSort, new ArrayList<>());
+            mainMap.get(wordSort).add(word);
         }
-        return new ArrayList<>(MapGroupAnagrams.values());
+        return new ArrayList<>(mainMap.values());
+    }
+
+    public static List<List<String>> groupAnagramsHashMap(String[] words) {
+        Map<String, List<String>> mainMap = new HashMap<>();
+        for (String word : words) {
+            int[] counter = new int[26];
+            for (char c : word.toCharArray()) {
+                counter[c - 'a']++;
+            }
+            String keyMap = Arrays.toString(counter);
+            mainMap.putIfAbsent(keyMap, new ArrayList<>());
+            mainMap.get(keyMap).add(word);
+        }
+        return new ArrayList<>(mainMap.values());
     }
 
 }
