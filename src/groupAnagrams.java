@@ -37,6 +37,17 @@ public class groupAnagrams {
         return new ArrayList<>(mainMap.values());
     }
 
+//  Time complicity => O(m * n)
+//  memory complicity => O(m * n)
+//  m => the number of String 
+//  n => the number of character for every String
+/*
+ * Why Time complicity is not O(n^2) when we make nested loop ? 
+ * this is not nested loop loop "why" =>
+ *  because the fist loop for words Array, and second loop for each word to character,
+ */
+
+//  commit message => "Group Anagrams => Add Time & memory complicity, and some notes"
     public static List<List<String>> groupAnagramsHashMap(String[] words) {
         Map<String, List<String>> mainMap = new HashMap<>();
         for (String word : words) {
