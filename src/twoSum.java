@@ -1,5 +1,6 @@
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,9 +27,38 @@ public class twoSum {
         return new int[0];
     }
 
+    
+    // Time complicity => O(n log n)
+    // memory complicity => O(n)
+    public static int[] twoSumSorting(int[] nums, int target) {
+
+        int[][] nums2DByIndex = new int[nums.length][2];
+
+        for (int i = 0; i < nums.length; i++) {
+            nums2DByIndex[i][0] = nums[i];
+            nums2DByIndex[i][1] = i;
+        }
+
+        Arrays.sort(nums2DByIndex, Comparator.comparingInt(a -> a[0]));
+
+        int i = 0, j = nums.length - 1;
+
+        while (i<j) { 
+            int cur = nums2DByIndex[i][0] + nums2DByIndex[j][0];
+            if(cur==target){
+                return new int[]{Math.min(nums2DByIndex[i][1],nums2DByIndex[j][1])
+                                ,Math.max(nums2DByIndex[i][1],nums2DByIndex[j][1])};
+            }else if(cur<target){
+                i++;
+            }else{
+                j--;
+            }
+        }
+        return new int[0];
+    }
+
     /**
-     * time complicity => O(n) 
-     * memory complicity => O(n)
+     * time complicity => O(n) memory complicity => O(n)
      */
     public static int[] towSumHashMaPTwoPass(int[] nums, int target) {
         Map<Integer, Integer> twoSumMap = new HashMap<>();
